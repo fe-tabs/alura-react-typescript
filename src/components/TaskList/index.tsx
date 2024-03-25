@@ -1,14 +1,14 @@
-import React from "react";
 import style from './TaskList.module.scss';
+import Item from "./Item";
 
 export default function TaskList() {
   const tasks = [
     {
-      task: 'React',
+      title: 'React',
       duration: '01:30:00'
     },
     {
-      task: 'TypeScript',
+      title: 'TypeScript',
       duration: '01:00:00'
     }
   ]
@@ -19,11 +19,11 @@ export default function TaskList() {
 
       <ul>
         {
-          tasks.map((task, index) => (
-            <li key={index} className={style.item}>
-              <h3>{task.task}</h3>
-              <span>{task.duration}</span>
-            </li>
+          tasks.map((item, index) => (
+            <Item task={{
+              id: index, 
+              ...item
+            }}/>
           ))
         }
       </ul>
