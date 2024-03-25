@@ -1,9 +1,12 @@
 import React from "react";
+import style from'./Button.module.scss';
 
 export default class Button extends React.Component {
   render() {
     return (
-      <button>Botão</button>
+      <button className={style.button}>
+        Botão
+      </button>
     );
   }
 }
