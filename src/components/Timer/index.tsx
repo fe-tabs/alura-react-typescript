@@ -7,6 +7,7 @@ import { timetoSeconds } from "../../common/utils/time";
 
 interface TimerProps {
   selected: ITask | undefined;
+  completeTask: () => void;
 }
 
 export default function Timer(props: TimerProps) {
@@ -24,6 +25,8 @@ export default function Timer(props: TimerProps) {
         setTime(time - 1);
         return startTimer(time - 1);
       }
+
+      props.completeTask();
     }, 1000);
   }
 

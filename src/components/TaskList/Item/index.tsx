@@ -14,7 +14,13 @@ export default function Item({
   selectTask
  }: ItemProps) {
   return (
-    <li className={`${style.item} ${selected && style.itemSelected}`} onClick={() => selectTask({
+    <li 
+      className={`
+        ${style.item} 
+        ${selected ? style.itemSelected : ''} 
+        ${completed ? style.itemCompleted : ''}
+      `} 
+      onClick={() => !completed && selectTask({
       id,
       title,
       duration,
@@ -23,6 +29,7 @@ export default function Item({
     })}>
       <h3>{title}</h3>
       <span>{duration}</span>
+      {completed && <span className={style.completed} aria-label='Tarefa Completa'></span>}
     </li>
   );
 }
