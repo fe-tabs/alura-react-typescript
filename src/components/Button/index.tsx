@@ -4,6 +4,7 @@ import style from'./Button.module.scss';
 interface ButtonProps {
   type?: "button" | "submit" | "reset" | undefined;
   children: ReactNode | undefined;
+  onClick?: () => void;
 }
 
 export default class Button extends React.Component<ButtonProps> {
@@ -11,7 +12,7 @@ export default class Button extends React.Component<ButtonProps> {
     const { type = "button" } = this.props;
     
     return (
-      <button className={style.button} type={type}>
+      <button onClick={this.props.onClick} className={style.button} type={type}>
         {this.props.children}
       </button>
     );

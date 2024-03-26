@@ -1,4 +1,4 @@
-import React, { FormEvent } from "react";
+import React from "react";
 import Button from "../Button";
 import style from './Form.module.scss';
 import { ITask } from "../../types/task";
@@ -58,7 +58,7 @@ export default class Form extends React.Component<FormProps> {
             id="duration"
             step="1"
             min="00:00:00"
-            max="01:30:00"
+            max="04:00:00"
             value={this.state.duration}
             onChange={event => this.setState({
               ...this.state,
