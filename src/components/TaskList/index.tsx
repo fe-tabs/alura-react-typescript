@@ -1,28 +1,23 @@
 import style from './TaskList.module.scss';
 import Item from "./Item";
+import { ITask } from '../../types/task';
 
-export default function TaskList() {
-  const tasks = [
-    {
-      title: 'React',
-      duration: '01:30:00'
-    },
-    {
-      title: 'TypeScript',
-      duration: '01:00:00'
-    }
-  ]
+interface TaskListProps {
+  tasks: ITask[];
+}
 
+export default function TaskList(props: TaskListProps) {
   return (
     <aside className={style.toDoList}>
       <h2>Estudos do dia</h2>
 
       <ul>
         {
-          tasks.map((item, index) => (
+          props.tasks.map((task, index) => (
             <Item task={{
               id: index, 
-              ...item
+              title: task.title,
+              duration: task.duration
             }}/>
           ))
         }
