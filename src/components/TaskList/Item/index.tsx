@@ -1,18 +1,28 @@
+import { ITask } from '../../../types/task';
 import style from '../TaskList.module.scss';
 
-interface ItemProps {
-  task: {
-    id: number;
-    title: string;
-    duration: string;
-  }
+interface ItemProps extends ITask{
+  selectTask: (task: ITask) => void;
 }
 
-export default function Item({ task }: ItemProps) {
+export default function Item({ 
+  id,
+  title,
+  duration,
+  selected,
+  completed,
+  selectTask
+ }: ItemProps) {
   return (
-    <li key={task.id} className={style.item}>
-      <h3>{task.title}</h3>
-      <span>{task.duration}</span>
+    <li className={`${style.item} ${selected && style.itemSelected}`} onClick={() => selectTask({
+      id,
+      title,
+      duration,
+      selected,
+      completed,
+    })}>
+      <h3>{title}</h3>
+      <span>{duration}</span>
     </li>
   );
 }

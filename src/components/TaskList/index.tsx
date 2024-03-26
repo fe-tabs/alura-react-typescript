@@ -4,6 +4,7 @@ import { ITask } from '../../types/task';
 
 interface TaskListProps {
   tasks: ITask[];
+  selectTask: (task: ITask) => void;
 }
 
 export default function TaskList(props: TaskListProps) {
@@ -14,11 +15,11 @@ export default function TaskList(props: TaskListProps) {
       <ul>
         {
           props.tasks.map((task, index) => (
-            <Item task={{
-              id: index, 
-              title: task.title,
-              duration: task.duration
-            }}/>
+            <Item
+              key={task.id}
+              {...task}
+              selectTask={props.selectTask}
+            />
           ))
         }
       </ul>

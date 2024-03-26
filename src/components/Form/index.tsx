@@ -1,14 +1,11 @@
 import React, { FormEvent } from "react";
 import Button from "../Button";
 import style from './Form.module.scss';
-
-interface Itask {
-  title: string,
-  duration: string
-}
+import { ITask } from "../../types/task";
+import { v4 as uuidv4 } from 'uuid';
 
 interface FormProps {
-  setTasks: React.Dispatch<React.SetStateAction<Itask[]>>;
+  setTasks: React.Dispatch<React.SetStateAction<ITask[]>>;
 }
 
 export default class Form extends React.Component<FormProps> {
@@ -19,10 +16,18 @@ export default class Form extends React.Component<FormProps> {
   
   addTask(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    this.props.setTasks(tasks => [...tasks, {...this.state}]);
+    this.props.setTasks(tasks => [
+      ...tasks, 
+      {
+        id: uuidv4(),
+        ...this.state,
+        selected: false,
+        completed: false
+      }
+    ]);
     this.setState({
       title: "",
-      duration: ""
+      duration: "00:00"
     });
   }
 
