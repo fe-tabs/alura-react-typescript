@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../Button";
 import style from './Form.module.scss';
 import { ITask } from "../../types/task";
@@ -8,70 +8,59 @@ interface FormProps {
   setTasks: React.Dispatch<React.SetStateAction<ITask[]>>;
 }
 
-export default class Form extends React.Component<FormProps> {
-  state = {
-    title: "",
-    duration: "00:00" 
-  };
+export default function Form({ setTasks }: FormProps) {
+  const [title, setTitle] = useState("");
+  const [duration, setDuration] = useState("00:00");
   
-  addTask(event: React.FormEvent<HTMLFormElement>) {
+  function addTask(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    this.props.setTasks(tasks => [
+    setTasks(tasks => [
       ...tasks, 
       {
         id: uuidv4(),
-        ...this.state,
+        title,
+        duration,
         selected: false,
         completed: false
       }
     ]);
-    this.setState({
-      title: "",
-      duration: "00:00"
-    });
+    setTitle("");
+    setDuration("00:00");
   }
+  
+  return (
+    <form className={style.newTask} onSubmit={addTask}>
+      <div className={style.inputContainer}>
+        <label htmlFor="">Adicionar um novo Estudo</label>
+        <input
+          type="text"
+          name="title"
+          id="title"
+          value={title}
+          onChange={event => setTitle(event.target.value)}
+          placeholder="O que você quer estudar?"
+          required
+        />
+      </div>
 
-  render() {
-    return (
-      <form className={style.newTask} onSubmit={this.addTask.bind(this)}>
-        <div className={style.inputContainer}>
-          <label htmlFor="">Adicionar um novo Estudo</label>
-          <input
-            type="text"
-            name="title"
-            id="title"
-            value={this.state.title}
-            onChange={event => this.setState({
-              ...this.state,
-              title: event.target.value
-            })}
-            placeholder="O que você quer estudar?"
-            required
-          />
-        </div>
+      <div className={style.inputContainer}>
+        <label htmlFor="">Duração</label>
+        <input
+          type="time"
+          name="duration"
+          id="duration"
+          step="1"
+          min="00:00:00"
+          max="04:00:00"
+          value={duration}
+          onChange={event => setDuration(event.target.value)}
+          required
+        />
+      </div>
 
-        <div className={style.inputContainer}>
-          <label htmlFor="">Duração</label>
-          <input
-            type="time"
-            name="duration"
-            id="duration"
-            step="1"
-            min="00:00:00"
-            max="04:00:00"
-            value={this.state.duration}
-            onChange={event => this.setState({
-              ...this.state,
-              duration: event.target.value
-            })}
-            required
-          />
-        </div>
-
-        <Button type="submit">
-          Adicionar
-        </Button>
-      </form>
-    );
-  }
+      <Button type="submit">
+        Adicionar
+      </Button>
+    </form>
+  );
 }
